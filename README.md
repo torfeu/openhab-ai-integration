@@ -43,7 +43,7 @@ The AI **understands context**, **analyzes data**, and **provides intelligent in
 ### Prerequisites
 
 - **OpenHAB** 4.x or 5.x running and accessible
-- **OpenWebUI** 0.3.64 or higher installed
+- **OpenWebUI** 0.3.34 or higher installed
 - **Ollama** with a compatible LLM (tested with qwen3 and gpt-oss 20B)
 - Python 3.8+ (included with OpenWebUI)
 
