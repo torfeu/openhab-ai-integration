@@ -241,9 +241,6 @@ This project was developed through collaboration between a smart home enthusiast
 ```bash
 git clone https://github.com/yourusername/openhab-ai-integration.git
 cd openhab-ai-integration
-
-# Test the tool locally
-python test_tool.py
 ```
 
 ## 📝 License
