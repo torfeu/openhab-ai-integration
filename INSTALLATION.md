@@ -86,13 +86,13 @@ Download from: https://ollama.com/download/windows
 
 ```bash
 # Recommended: Qwen 2.5 (7B or 14B)
-ollama pull qwen2.5:7b
+ollama pull qwen3:14b
 
 # Alternative: DeepSeek R1 
-ollama pull deepseek-r1:7b
+ollama pull qwen3:30b
 
 # Lightweight option: Llama 3
-ollama pull llama3:8b
+ollama pull gpt-oss
 ```
 
 ### Verify Model Installation
@@ -102,7 +102,7 @@ ollama pull llama3:8b
 ollama list
 
 # Test the model
-ollama run qwen2.5:7b "Hello, can you help me control my smart home?"
+ollama run qwen3:14b "Hello, can you help me control my smart home?"
 ```
 
 ---
@@ -357,7 +357,7 @@ Current power consumption:
 **Solutions**:
 
 1. **Model doesn't support function calling**:
-   - Switch to `qwen2.5` (best support)
+   - Switch to `qwen3:14b or qwen3:30b` (best support)
    - Avoid older/smaller models
 
 2. **Tool not enabled for chat**:
