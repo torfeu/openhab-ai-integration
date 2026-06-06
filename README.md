@@ -40,19 +40,21 @@ The AI **understands context**, **analyzes data**, and **provides intelligent in
 
 ## 🚀 Quick Start
 
+**OpenHAB** 4.x or 5.x must be running and accessible. Then choose your preferred integration method:
+
+---
+
+## 🖥️ Option A — OpenWebUI (direct tool import)
+
+Use the tool directly inside OpenWebUI as a function-calling tool.
+
 ### Prerequisites
+- **OpenWebUI** 0.3.34 or higher
+- **Ollama** with a compatible LLM (qwen3 or gpt-oss 20B)
 
-- **OpenHAB** 4.x or 5.x running and accessible
-- **OpenWebUI** 0.3.34 or higher installed
-- **Ollama** with a compatible LLM (tested with qwen3 and gpt-oss 20B)
-- Python 3.8+ (included with OpenWebUI)
-
-### Installation
-
-#### 1. Install OpenWebUI (if not already installed)
+### 1. Install OpenWebUI (if not already installed)
 
 ```bash
-# Using Docker (recommended)
 docker run -d -p 3000:8080 \
   -v open-webui:/app/backend/data \
   --name open-webui \
@@ -60,62 +62,55 @@ docker run -d -p 3000:8080 \
   ghcr.io/open-webui/open-webui:main
 ```
 
-Visit `http://localhost:3000` to complete setup.
-
-#### 2. Install Ollama and LLM
+### 2. Install Ollama and LLM
 
 ```bash
-# Install Ollama
 curl -fsSL https://ollama.com/install.sh | sh
-
-# Pull a compatible model (qwen2.5 recommended)
 ollama pull qwen3:14b
+```
 
-# Alternative: GPT-OSS
-ollama pull gpt-oss:latest
+### 3. Import the OpenHAB Tool
 
-#### 3. Import the OpenHAB Tool
-
-1. In OpenWebUI, go to **Settings** → **Tools**
+1. In OpenWebUI → **Settings** → **Tools**
 2. Click **"Import Tool"**
-3. Upload the `tool-openhab_smart_home.json` file from this repository
-4. Configure the tool settings:
-   - **OpenHAB Host**: Your OpenHAB IP (e.g., `<your-openhab-ip>`)
-   - **OpenHAB Port**: Usually `8080`
-   - **API Token**: (Optional) Generate in OpenHAB under Settings → API Security
-   - **Enable Item Filter**: Recommended (excludes Groups for cleaner results)
+3. Upload `tool-openhab_smart_home.json` from this repository
+4. Configure:
+   - **OpenHAB Host**: `<your-openhab-ip>`
+   - **OpenHAB Port**: `8080`
+   - **API Token**: (optional) OpenHAB → Settings → API Security
+   - **Enable Item Filter**: recommended
 
-#### 4. Test the Integration
+### 4. Test
 
-Start a new chat in OpenWebUI and ask:
+Start a new chat and ask: `Show me all controllable devices in my smart home`
 
-```
-Show me all controllable devices in my smart home
-```
+---
 
-If successful, you'll see a categorized list of your devices!
+## 🔌 Option B — MCP Server (json-mcp-manager)
 
-## 🔌 Alternative: Run as MCP Server
+Run the OpenHAB tool as a standalone **MCP server** — accessible from Claude Code, Codex, Cursor, or any MCP client, without OpenWebUI.
 
-Instead of importing the tool into OpenWebUI directly, you can run it as a standalone **MCP server** using [json-mcp-manager](https://github.com/torfeu/json-mcp-manager). This makes the OpenHAB integration available to any MCP client — including Claude Code, Codex, or OpenWebUI via MCP connection.
+Uses [json-mcp-manager](https://github.com/torfeu/json-mcp-manager).
+
+### 1. Set up json-mcp-manager
 
 ```bash
-# Clone and set up json-mcp-manager
 git clone https://github.com/torfeu/json-mcp-manager.git
 cd json-mcp-manager
 python3 -m venv .venv
 .venv/bin/pip install fastapi "uvicorn[standard]" pydantic python-multipart mcp packaging starlette httpx
-
-# Start the manager
 .venv/bin/python app/manager.py
-
-# Open the web UI at http://127.0.0.1:7860
-# Upload tool-openhab_smart_home.json → Install → Start
 ```
 
-The tool is then reachable via Streamable HTTP at `http://<your-server-ip>:<port>/mcp`.
+### 2. Install the OpenHAB tool
 
-In Claude Code, add it to `~/.claude/mcp.json`:
+Open `http://127.0.0.1:7860` → upload `tool-openhab_smart_home.json` → **Install** → **Start**
+
+### 3. Connect your MCP client
+
+The tool is reachable at `http://<your-server-ip>:<port>/mcp`.
+
+**Claude Code** — add to `~/.claude/mcp.json`:
 
 ```json
 {
