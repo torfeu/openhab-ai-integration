@@ -80,7 +80,7 @@ ollama pull gpt-oss:latest
 2. Click **"Import Tool"**
 3. Upload the `tool-openhab_smart_home.json` file from this repository
 4. Configure the tool settings:
-   - **OpenHAB Host**: Your OpenHAB IP (e.g., `192.168.1.100`)
+   - **OpenHAB Host**: Your OpenHAB IP (e.g., `<your-openhab-ip>`)
    - **OpenHAB Port**: Usually `8080`
    - **API Token**: (Optional) Generate in OpenHAB under Settings → API Security
    - **Enable Item Filter**: Recommended (excludes Groups for cleaner results)
@@ -94,6 +94,40 @@ Show me all controllable devices in my smart home
 ```
 
 If successful, you'll see a categorized list of your devices!
+
+## 🔌 Alternative: Run as MCP Server
+
+Instead of importing the tool into OpenWebUI directly, you can run it as a standalone **MCP server** using [json-mcp-manager](https://github.com/torfeu/json-mcp-manager). This makes the OpenHAB integration available to any MCP client — including Claude Code, Codex, or OpenWebUI via MCP connection.
+
+```bash
+# Clone and set up json-mcp-manager
+git clone https://github.com/torfeu/json-mcp-manager.git
+cd json-mcp-manager
+python3 -m venv .venv
+.venv/bin/pip install fastapi "uvicorn[standard]" pydantic python-multipart mcp packaging starlette httpx
+
+# Start the manager
+.venv/bin/python app/manager.py
+
+# Open the web UI at http://127.0.0.1:7860
+# Upload tool-openhab_smart_home.json → Install → Start
+```
+
+The tool is then reachable via Streamable HTTP at `http://<your-server-ip>:<port>/mcp`.
+
+In Claude Code, add it to `~/.claude/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "openhab": {
+      "url": "http://<your-server-ip>:<port>/mcp"
+    }
+  }
+}
+```
+
+---
 
 ## 📖 Usage Examples
 
