@@ -90,13 +90,13 @@ Start a new chat and ask: `Show me all controllable devices in my smart home`
 
 Run the OpenHAB tool as a standalone **MCP server** — accessible from Claude Code, Codex, Cursor, or any MCP client, without OpenWebUI.
 
-Uses [json-mcp-manager](https://github.com/torfeu/json-mcp-manager).
+Uses [json-mcp-manager](https://github.com/torfeu/owui-mcp-spawner).
 
 ### 1. Set up json-mcp-manager
 
 ```bash
-git clone https://github.com/torfeu/json-mcp-manager.git
-cd json-mcp-manager
+git clone https://github.com/torfeu/owui-mcp-spawner.git
+cd owui-mcp-spawner
 python3 -m venv .venv
 .venv/bin/pip install fastapi "uvicorn[standard]" pydantic python-multipart mcp packaging starlette httpx
 .venv/bin/python app/manager.py
